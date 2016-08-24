@@ -1,4 +1,10 @@
 #!/bin/sh
+
+#
+#  Created by Denis Vashkovski on 17/03/16.
+#  Copyright © 2016 Denis Vashkovski. All rights reserved.
+#
+
 set -e
 
 SCRIPT_NAME=${0##*/}
@@ -75,12 +81,14 @@ CURRENT_DATE=$(date "+%d\/%m\/%y")
 CURRENT_YEAR=$(date "+%Y")
 
 NEW_APP_LOCATION=$1
+if [ "${NEW_APP_LOCATION: -1}" == "/" ]; then
+    NEW_APP_LOCATION="${NEW_APP_LOCATION%?}"
+fi
 NEW_APP_NAME=$(basename $NEW_APP_LOCATION)
 NEW_APP_DIR_PATH=$(dirname $NEW_APP_LOCATION)
 
 TEMPLATE_APP_NAME="${TEMPLATES_APP_NAME["($TEMPLATE_TYPE-1)"]}"
-
-TEMPLATE_APP_PATH=$(cd "$(dirname "$0")"; pwd)
+TEMPLATE_APP_PATH="$(cd "$(dirname "$0")"; pwd)/$TEMPLATE_APP_NAME"
 TEMPLATE_ORGANIZATION_NAME="vandv"
 TEMPLATE_ORGANIZATION_IDENTIFIER="com.${TEMPLATE_ORGANIZATION_NAME}"
 
@@ -103,15 +111,12 @@ fi
 echo
 echo "Start script"
 echo
-echo "copy $TEMPLATE_APP_PATH to $NEW_APP_LOCATION started"
-echo
 
 cp -R "$TEMPLATE_APP_PATH/." $NEW_APP_LOCATION
 find $NEW_APP_LOCATION -name '*.DS_Store' -type f -delete
 #rm -rf "$NEW_APP_LOCATION/.git"
 
-echo
-echo copy template finished
+echo "copy $TEMPLATE_APP_PATH to $NEW_APP_LOCATION finished"
 
 mv "$NEW_APP_LOCATION/$TEMPLATE_APP_NAME" "$NEW_APP_LOCATION/$NEW_APP_NAME"
 mv "$NEW_APP_LOCATION/${TEMPLATE_APP_NAME}.xcodeproj" "$NEW_APP_LOCATION/${NEW_APP_NAME}.xcodeproj"
