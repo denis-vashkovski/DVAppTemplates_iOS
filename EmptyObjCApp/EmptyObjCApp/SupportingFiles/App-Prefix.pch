@@ -1,0 +1,16 @@
+//
+//  App-Prefix.pch
+//  App
+//
+//  Created by USER_NAME on CURRENT_DATE.
+//  Copyright © CURRENT_YEAR COMPANY_NAME. All rights reserved.
+//
+
+#ifndef App_Prefix_pch
+#define App_Prefix_pch
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <DVAppCore.h>
+
+#endif /* App_Prefix_pch */
